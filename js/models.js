@@ -73,20 +73,20 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory(currentUser, newStory) {
+  async addStory(currentUser, newStory) { // could pass in newStory as {author, title, url}
     // UNIMPLEMENTED: complete this function!
     const response = await axios({
       url: `${BASE_URL}/stories`,
       method: "POST",
-      data: { story: { author: newStory.author, title: newStory.title, url: newStory.url}, token: currentUser.loginToken},
+      data: { story: { author: newStory.author, title: newStory.title, url: newStory.url}, token: currentUser.loginToken}, // can use same variable names that were passed as params
     });
 
     
     let story = response.data.story
     // console.log(response.data.story);
 
-    let submitStory = new Story(story);
-    storyList.stories.unshift(submitStory);
+    let submitStory = new Story(story); // combine lines 85 & 88
+    storyList.stories.unshift(submitStory); // this.stories since called on class?
   }
 }
 

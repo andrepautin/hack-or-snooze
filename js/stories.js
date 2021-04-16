@@ -18,7 +18,7 @@ async function getAndShowStoriesOnStart() {
  *
  * Returns the markup for the story.
  */
-
+ 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
@@ -51,7 +51,7 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-// gets user input from story form and passes to addStory
+// gets user input from story form to submit a new story and passes to addStory
 
 async function getStoryFromUser(evt) {
   console.debug("submitstory", evt);
