@@ -82,7 +82,6 @@ class StoryList {
     });
 
     
-    delete response.data.story.updatedAt
     let story = response.data.story
     // console.log(response.data.story);
 
