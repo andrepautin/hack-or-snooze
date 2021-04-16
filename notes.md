@@ -1,3 +1,5 @@
+## Flow of Page / which functions are called
+
 1. At Page Load
  start (main.js) 
     => CheckForRememberedUser (user.js) 
@@ -32,8 +34,7 @@
         => generateUserProfile (nav.js)
 
 
-
-API Use           
+## API Use           
 
 1. List of Stories 
     - Used for PutStoriesOnPage
@@ -89,7 +90,7 @@ API Use
                 }
 
 
-FILE Use
+## FILE Use
 1. models.js
     => handles data/logic of site (NO UI)
     => has BASE_URL to add API at endpoint
@@ -125,5 +126,71 @@ FILE Use
             => generateStoryMarkUp()
                 => formats story as HTML list item
             => shows whole story list after each story appended
+
+3. User.js
+    => login()
+        => stores username and password from form
+        => runs User.login from modals.js to check if login API finds user. If so, returns new User Instance as currentUser
+        => resets login?
+        => runs Save User Credentials
+        => updates User UI
+    => signup()
+        => stores username, password, name
+        => runs User.signup() from modals.js to register new user in API
+        => returns that new User instance as currentUser
+        => Runs Save User Credentials
+        => Updates User UI
+        => resets page?
+    => logout()
+        => clears localStorage credentials
+        => reloads currents page
+    => checkForRememberedUser()
+        => checks local storage for token key and username
+            => if found it runs User.loginViaStoredCredentials to get user data from User API
+            => returns new User instance stored as currentUser
+    => saveUserCrentials()
+        => if currentUser exists => store token and username in local storage
+    => updateUIOnUserLogin()
+        => shows storiesList
+        => runs updateNavOnLogin() to show navigation DOM elements
+
+4. Nav.js
+    => navAllStories()
+        => calls hidePageComponents in main.js
+        => calls putStoriesOnPage in stories.js
+    => navLoginClick()
+        => calls hidePageComponents in main.js
+        => updates DOM to show login form / sign-up form
+    => updateNavOnLogin() 
+        => updates DOM to show links available to loged in user
+        => hides elements for Login and shows elements for logout
+        => adds text of username and then updates DOM to show userProfile
+
+5. main.js
+    => const global variables for main DOM elements
+    => hidePageComponents()
+        => hides stories, loginform, and signupform
+    => start()
+        => runs CheckedforRememberedUser()
+        => runs showStories onStart from Stories API
+        => if there is a current user then update Login Nav DOM
+
+# WHAT WE NEED TO ADD / TODO
+
+## PART 2A
+    1. Write a function for addStory that is a POST request to the Story API and receives the response with added data
+    2. Taking response from API to create new Story instance and add it to storiesList
+
+    ex. let newStory = await storyList.addStory(currentUser,
+        {title: "Test", author: "Me", url: "http://meow.com"});
+
+        newStory instanceof Story;      // should be true!
+        console.log(storyList);         // you should see your new story here!    
+
+
+
+    
+    
+
 
 
