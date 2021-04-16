@@ -39,6 +39,6 @@ function updateNavOnLogin() {
 
 function navSubmitClick() {
   console.debug("navSubmitClick");
-  $submitForm.show();
+  $submitForm.slideToggle();
 }
 $("#nav-submit").on("click", navSubmitClick);

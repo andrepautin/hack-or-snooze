@@ -51,9 +51,9 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-// gets user input from story form to submit a new story and passes to addStory
+// gets user input from story form to submit a new story and passes to addStory //handle submission of submit story form
 
-async function getStoryFromUser(evt) {
+async function submitNewStory(evt) {
   console.debug("submitstory", evt);
   evt.preventDefault();
 
@@ -61,11 +61,12 @@ async function getStoryFromUser(evt) {
   const title = $("#story-title").val();
   const url = $("#story-url").val();
 
-  let inputToStory = {author, title, url};
-  console.log(inputToStory);
-  let newStory = await storyList.addStory(currentUser, inputToStory);
-  $allStoriesList.prepend(newStory);
+  let newStory = await storyList.addStory(currentUser, {author, title, url}); // pass in destructuring object
+  
+  let $newStory = generateStoryMarkup(newStory);
+
+  $allStoriesList.prepend($newStory);
   $submitForm.trigger("reset");
   $submitForm.hide();
 }
-$("#submit-story").on("submit", getStoryFromUser);
+$("#submit-story").on("submit", submitNewStory);

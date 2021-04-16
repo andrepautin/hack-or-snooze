@@ -25,7 +25,8 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    
+    return new URL(this.url).host;
   }
 }
 
@@ -73,20 +74,22 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory(currentUser, newStory) { // could pass in newStory as {author, title, url}
+  async addStory(currentUser, {author, title, url}) { // could pass in newStory as {author, title, url}
     // UNIMPLEMENTED: complete this function!
+
+    let token = currentUser.loginToken
+
     const response = await axios({
       url: `${BASE_URL}/stories`,
       method: "POST",
-      data: { story: { author: newStory.author, title: newStory.title, url: newStory.url}, token: currentUser.loginToken}, // can use same variable names that were passed as params
+      data: { story: {author, title, url}, token}, // can use same variable names that were passed as params
     });
 
-    
-    let story = response.data.story
     // console.log(response.data.story);
 
-    let submitStory = new Story(story); // combine lines 85 & 88
-    storyList.stories.unshift(submitStory); // this.stories since called on class?
+    let story = new Story(response.data.story); // combine lines 85 & 88
+    this.stories.unshift(story); // this.stories since called on class?
+    return story;
   }
 }
 
