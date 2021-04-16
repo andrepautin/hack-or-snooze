@@ -210,7 +210,7 @@ class User {
   // adding favorite to user's favorites array
   async addFavorite(story) {
     this.favorites.push(story);
-    await this._addOrDeleteFavoriteAPI(story, true);
+    await this._addOrRemoveFavoriteAPI(story, true);
   }
 
   // removing favorite from user's favorites array
@@ -222,13 +222,11 @@ class User {
   
   // handle adding or removing favorite from user's favorites array on API
   async _addOrRemoveFavoriteAPI(story, toggle) {
-    const method = toggle ? "POST" : "DELETE"
+    const method = toggle ? "POST" : "DELETE";
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`, 
       method: method, 
       params: {token: this.loginToken}
     });
-    console.log(response);
-    return response;
   }
 }

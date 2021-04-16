@@ -21,13 +21,21 @@ async function getAndShowStoriesOnStart() {
  
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-
+  let favoriteStar;
+  if(currentUser.favorites.find(s => s.storyId === story.storyId)) {
+    favoriteStar = "<i class='fas fa-star'></i>";
+  } else {
+    favoriteStar = "<i class='far fa-star'></i>";
+  }
+  
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        <small class="story-favorite"> ${favoriteStar} </small>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
+       
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username}</small>
@@ -70,3 +78,21 @@ async function submitNewStory(evt) {
   $submitForm.hide();
 }
 $("#submit-story").on("submit", submitNewStory);
+
+// toggles adding and removing story from favorites
+async function toggleFavorite (e) {
+  let $targetStory = $(e.target);
+  let $closestLiId = $targetStory.closest('li').attr("id");
+  
+  let story = storyList.stories.find(s => s.storyId === $closestLiId);
+
+  if($targetStory.hasClass('far')) {
+    await currentUser.addFavorite(story);
+  } else {
+    await currentUser.removeFavorite(story);
+  }
+
+  $targetStory.toggleClass('far fas');
+}
+
+$allStoriesList.on("click",".fa-star", toggleFavorite)
