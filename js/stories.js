@@ -22,6 +22,7 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
   let favoriteStar;
+  // use ternary operator here
   if(currentUser.favorites.find(s => s.storyId === story.storyId)) {
     favoriteStar = "<i class='fas fa-star'></i>";
   } else {
@@ -80,11 +81,11 @@ async function submitNewStory(evt) {
 $("#submit-story").on("submit", submitNewStory);
 
 // toggles adding and removing story from favorites
-async function toggleFavorite (e) {
-  let $targetStory = $(e.target);
-  let $closestLiId = $targetStory.closest('li').attr("id");
+async function toggleFavorite (evt) {
+  let $targetStory = $(evt.target);
+  let closestLiId = $targetStory.closest('li').attr("id");
   
-  let story = storyList.stories.find(s => s.storyId === $closestLiId);
+  let story = storyList.stories.find(s => s.storyId === closestLiId);
 
   if($targetStory.hasClass('far')) {
     await currentUser.addFavorite(story);
@@ -94,5 +95,21 @@ async function toggleFavorite (e) {
 
   $targetStory.toggleClass('far fas');
 }
-
 $allStoriesList.on("click",".fa-star", toggleFavorite)
+
+
+// puts all of the currentUser's favorite stories on the page
+function putUserFavoriteStoriesOnPage() {
+
+  $allStoriesList.empty();
+  $userFavoritesList.empty();
+
+  // loop through all of our favorite stories and generate HTML for them
+  for (let story of currentUser.favorites) {
+    const $story = generateStoryMarkup(story);
+    // console.log($story);
+    $userFavoritesList.append($story);
+  }
+  $userFavoritesList.show();
+}
+$("#nav-favorites").on("click", putUserFavoriteStoriesOnPage);

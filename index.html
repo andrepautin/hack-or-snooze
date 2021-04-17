@@ -40,6 +40,9 @@
   <div>
     <a class="nav-link main-nav-links" href="#" id="nav-submit">submit</a>
   </div>
+  <div>
+    <a class="nav-link main-nav-links" href="#" id="nav-favorites">favorites</a>
+  </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
     <a class="nav-link" href="#" id="nav-user-profile"></a>
@@ -69,9 +72,14 @@
   <hr>
 </section>
 
+
+
 <!-- area for stories (all stories, user stories, favorites) -->
 <section class="stories-container container">
-
+  
+  <!-- list of all currentUser favorite stories -->
+  <ol class="stories-list hidden" id="favorites-stories-container"></ol>
+  
   <!-- loading message (removed by JS after stories loaded) -->
   <div id="stories-loading-msg">Loading&hellip;</div>
 

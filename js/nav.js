@@ -42,3 +42,8 @@ function navSubmitClick() {
   $submitForm.slideToggle();
 }
 $("#nav-submit").on("click", navSubmitClick);
+
+// calls putUserFavoriteStoriesOnPage when favorites link is clicked in nav
+// function to handle when favorites clicked in navbar
+// $("#nav-favorites").on("click", putUserFavoriteStoriesOnPage);
+

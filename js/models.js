@@ -207,7 +207,7 @@ class User {
     }
   }
 
-  // adding favorite to user's favorites array
+  // adding favorite to user's favorites array and to server
   async addFavorite(story) {
     this.favorites.push(story);
     await this._addOrRemoveFavoriteAPI(story, true);
